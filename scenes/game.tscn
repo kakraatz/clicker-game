@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ksm4jt1h5xce"]
+[gd_scene load_steps=3 format=3 uid="uid://ksm4jt1h5xce"]
 
 [ext_resource type="Script" uid="uid://delqcrtlseoea" path="res://scenes/game.gd" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://bkx3lal065176" path="res://scenes/buildingbutton.gd" id="2_lnu2h"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_uwrxv")
@@ -41,6 +42,11 @@ text = "FATORY 2"
 
 [node name="Cycle_Interval" type="Timer" parent="."]
 autostart = true
+
+[node name="BuildingButton1" type="Node2D" parent="."]
+scale = Vector2(1e-05, 1e-05)
+script = ExtResource("2_lnu2h")
+metadata/_custom_type_script = "uid://bkx3lal065176"
 
 [connection signal="pressed" from="Generate_Value_Button" to="." method="_on_generate_value_button_pressed"]
 [connection signal="pressed" from="Factory1_Button" to="." method="_on_factory_1_button_pressed"]
