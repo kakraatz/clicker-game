@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="TotalsResourceTemplate" load_steps=2 format=3 uid="uid://dh7ci4vxldaqh"]
+
+[ext_resource type="Script" uid="uid://bebbrqq6sfpil" path="res://resources/totals/totals_resource_template.gd" id="1_rj6x4"]
+
+[resource]
+script = ExtResource("1_rj6x4")
+metadata/_custom_type_script = "uid://bebbrqq6sfpil"

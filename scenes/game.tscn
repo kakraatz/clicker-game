@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://ksm4jt1h5xce"]
+[gd_scene load_steps=6 format=3 uid="uid://ksm4jt1h5xce"]
 
 [ext_resource type="Script" uid="uid://delqcrtlseoea" path="res://scenes/game.gd" id="1_uwrxv"]
-[ext_resource type="Script" uid="uid://bkx3lal065176" path="res://scenes/buildingbutton.gd" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://btxgpjbgcw4lp" path="res://scenes/BuildingManger.tscn" id="2_yqjtg"]
+[ext_resource type="Script" uid="uid://bnt28ybgtrjr0" path="res://buildings/building.gd" id="3_lbhrr"]
+[ext_resource type="Resource" uid="uid://b1ttq6tbu7vgb" path="res://resources/buildings/farm_building_resource.tres" id="4_lbhrr"]
+[ext_resource type="Resource" uid="uid://dybqdfgy3lssh" path="res://resources/buildings/temple_building_resource.tres" id="5_iywne"]
 
-[node name="GameScene" type="Node2D"]
+[node name="Game" type="Node2D"]
 script = ExtResource("1_uwrxv")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -26,27 +29,10 @@ offset_top = 3.0
 offset_right = 1150.0
 offset_bottom = 81.0
 
-[node name="Factory1_Button" type="Button" parent="."]
-offset_left = 16.0
-offset_top = 21.0
-offset_right = 216.0
-offset_bottom = 101.0
-text = "FACTORY 1"
-
-[node name="Factory2_Button" type="Button" parent="."]
-offset_left = 16.0
-offset_top = 130.0
-offset_right = 216.0
-offset_bottom = 210.0
-text = "FATORY 2"
-
 [node name="Cycle_Interval" type="Timer" parent="."]
 autostart = true
 
-[node name="BuildingButton1" type="Node2D" parent="."]
-scale = Vector2(1e-05, 1e-05)
-script = ExtResource("2_lnu2h")
-metadata/_custom_type_script = "uid://bkx3lal065176"
+[node name="BuildingManger" parent="." instance=ExtResource("2_yqjtg")]
+currentBuildings = Array[ExtResource("3_lbhrr")]([ExtResource("4_lbhrr"), ExtResource("5_iywne")])
 
 [connection signal="pressed" from="Generate_Value_Button" to="." method="_on_generate_value_button_pressed"]
-[connection signal="pressed" from="Factory1_Button" to="." method="_on_factory_1_button_pressed"]

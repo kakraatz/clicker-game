@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Building" load_steps=2 format=3 uid="uid://dybqdfgy3lssh"]
+
+[ext_resource type="Script" uid="uid://bnt28ybgtrjr0" path="res://buildings/building.gd" id="1_q4cb6"]
+
+[resource]
+script = ExtResource("1_q4cb6")
+id = 2
+factory_multiplier = 5
+initial_cost = 20
+current_cost = 15
+name = "TEMPLE"
+metadata/_custom_type_script = "uid://bnt28ybgtrjr0"

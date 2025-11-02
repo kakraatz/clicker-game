@@ -11,6 +11,11 @@ class_name Building
 @export var name = ""
 @export var flat_multiplier = 1.3
 
+func init(factory_multiplier, initial_cost, name):
+	self.factory_multiplier = factory_multiplier
+	self.initial_cost = initial_cost
+	self.name = name
+
 
 func buy_building():
 	factory_count += 1
