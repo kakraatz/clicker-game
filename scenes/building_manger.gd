@@ -1,8 +1,10 @@
 extends Node
 
 @export var currentBuildings: Array[Building]
+signal toggleVisibilitySignal
 
-@onready var vboxContainer = $CanvasLayer/Control/Panel/ScrollContainer/VBoxContainer
+@onready var vboxContainer = $Control/Panel/ScrollContainer/VBoxContainer
+@onready var control = $Control
 
 var totalsResource: TotalsResourceTemplate = preload("res://resources/totals/totals_resource.tres")
 var buildingButtonScene: PackedScene = preload("res://scenes/buildingbutton.tscn")
@@ -16,6 +18,7 @@ var buildingButtons: Array[BuildingButton] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	toggleVisibilitySignal.connect(toggleVisibility)	
 	#Creates building buttons for each building that is passed in
 	if (currentBuildings):
 		for building in currentBuildings:
@@ -45,3 +48,15 @@ func createBuildingButton(buildingResource: Building):
 		vboxContainer.add_child(buildingButton)
 		buildingButton.update()
 		buildingButtons.append(buildingButton)
+	else:
+		printerr('Missing vboxContainer')
+		
+func toggleVisibility():
+	print('gerer')
+	if control:
+		if control.visible:
+			control.visible = false
+		else:
+			control.visible = true
+	else:
+		printerr('No control')

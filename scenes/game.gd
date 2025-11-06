@@ -4,12 +4,14 @@ extends Node
 @onready var gameControlNode: Control = $"."
 @onready var goldValueLabel: Label = $ValueControl/Current_Value_Label
 @onready var menuScene: PackedScene = preload("res://scenes/menu.tscn")
+@onready var buildingManagerNode: Node = $BuildingManger
 
 var flat_multiplier = 1.32
 var totalsResource: TotalsResourceTemplate = preload("res://resources/totals/totals_resource.tres")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	buildingManagerNode.connect("toggleVisibilitySignal", Callable(buildingManagerNode ,"toggleVisibilitySignal"))
 	cycle_interval.timeout.connect(run_tick)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,8 +31,18 @@ func run_tick():
 	var currentTickIncrementAmount = totalsResource.currentTickIncrementValue
 	totalsResource.current_value = current_value + totalsResource.currentTickIncrementValue
 
+func toggleBuildingUIVisability() -> void:
+	if gameControlNode:
+		buildingManagerNode.emit_signal("toggleVisibilitySignal")
+		var menu = menuScene.instantiate()
+		menu.gameStarted = true
+		gameControlNode.add_child(menu)
+	else:
+		print('no node')
+
 func _on_menu_button_pressed() -> void:
 	if gameControlNode:
+		toggleBuildingUIVisability()
 		var menu = menuScene.instantiate()
 		menu.gameStarted = true
 		gameControlNode.add_child(menu)
