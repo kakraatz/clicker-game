@@ -1,5 +1,10 @@
 extends Node
-@onready var cycle_interval = $Cycle_Interval
+
+@onready var cycle_interval: Timer = $Cycle_Interval
+@onready var gameControlNode: Control = $"."
+@onready var goldValueLabel: Label = $ValueControl/Current_Value_Label
+@onready var menuScene: PackedScene = preload("res://scenes/menu.tscn")
+
 var flat_multiplier = 1.32
 var totalsResource: TotalsResourceTemplate = preload("res://resources/totals/totals_resource.tres")
 
@@ -10,7 +15,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var currentValue = totalsResource.current_value
-	$Current_Value_Label.text = 'VALUE: ' + str(currentValue)
+	if goldValueLabel:
+		goldValueLabel.text = 'VALUE: ' + str(currentValue)
 	#can_buy(factory1.current_cost, factory1_button)
 
 func _on_generate_value_button_pressed() -> void:
@@ -22,12 +28,11 @@ func run_tick():
 	var current_value = totalsResource.current_value
 	var currentTickIncrementAmount = totalsResource.currentTickIncrementValue
 	totalsResource.current_value = current_value + totalsResource.currentTickIncrementValue
-	
 
-func _on_factory_1_button_pressed() -> void:
-	pass
-	#if can_buy(factory1.current_cost, factory1_button):
-		#value_count -= factory1.current_cost
-		#factory1.buy_building()
-		#factory1_button.text = factory1.button_label
-		
+func _on_menu_button_pressed() -> void:
+	if gameControlNode:
+		var menu = menuScene.instantiate()
+		menu.gameStarted = true
+		gameControlNode.add_child(menu)
+	else:
+		print('no node')

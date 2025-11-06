@@ -1,0 +1,2 @@
+Is it better to use a global script for the current value total vs a resource like 
+it currently is? 

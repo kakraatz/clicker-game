@@ -2,39 +2,64 @@
 
 [ext_resource type="Script" uid="uid://h2l75q74123t" path="res://scenes/menu.gd" id="1_lti8b"]
 
-[node name="Menu" type="Node2D"]
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_lti8b")
 
-[node name="Button_Manager" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.28683865, 0.36833584, 0.2326344, 1)
 
-[node name="Start_Button" type="Button" parent="Button_Manager"]
-layout_mode = 0
-offset_left = 500.0
-offset_top = 93.0
-offset_right = 700.0
-offset_bottom = 173.0
+[node name="Button_Manager" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="Button_Manager"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.5
+offset_top = -52.5
+offset_right = 39.5
+offset_bottom = 52.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 9
+theme_override_constants/v_separation = 20
+
+[node name="Start_Button" type="Button" parent="Button_Manager/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "START"
 
-[node name="Options_Button" type="Button" parent="Button_Manager"]
-layout_mode = 0
-offset_left = 500.0
-offset_top = 224.0
-offset_right = 700.0
-offset_bottom = 304.0
+[node name="Options_Button" type="Button" parent="Button_Manager/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "OPTIONS"
 
-[node name="Quit_Button" type="Button" parent="Button_Manager"]
-layout_mode = 0
-offset_left = 500.0
-offset_top = 353.0
-offset_right = 700.0
-offset_bottom = 433.0
+[node name="Quit_Button" type="Button" parent="Button_Manager/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 text = "QUIT"
 
-[connection signal="pressed" from="Button_Manager/Start_Button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Button_Manager/Options_Button" to="." method="_on_options_button_pressed"]
-[connection signal="pressed" from="Button_Manager/Quit_Button" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="Button_Manager/GridContainer/Start_Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Button_Manager/GridContainer/Options_Button" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="Button_Manager/GridContainer/Quit_Button" to="." method="_on_quit_button_pressed"]

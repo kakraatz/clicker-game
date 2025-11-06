@@ -6,28 +6,23 @@
 [ext_resource type="Resource" uid="uid://b1ttq6tbu7vgb" path="res://resources/buildings/farm_building_resource.tres" id="4_lbhrr"]
 [ext_resource type="Resource" uid="uid://dybqdfgy3lssh" path="res://resources/buildings/temple_building_resource.tres" id="5_iywne"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_uwrxv")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -103.0
-offset_top = -40.0
-offset_right = 1179.0
-offset_bottom = 669.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.52906674, 0.5290667, 0.5290667, 1)
-
-[node name="Generate_Value_Button" type="Button" parent="."]
-offset_left = 927.0
-offset_top = 544.0
-offset_right = 1127.0
-offset_bottom = 624.0
-text = "GENERATE"
-
-[node name="Current_Value_Label" type="Label" parent="."]
-offset_left = 949.0
-offset_top = 3.0
-offset_right = 1150.0
-offset_bottom = 81.0
 
 [node name="Cycle_Interval" type="Timer" parent="."]
 autostart = true
@@ -35,4 +30,84 @@ autostart = true
 [node name="BuildingManger" parent="." instance=ExtResource("2_yqjtg")]
 currentBuildings = Array[ExtResource("3_lbhrr")]([ExtResource("4_lbhrr"), ExtResource("5_iywne")])
 
-[connection signal="pressed" from="Generate_Value_Button" to="." method="_on_generate_value_button_pressed"]
+[node name="MenuControl" type="Control" parent="."]
+custom_minimum_size = Vector2(220, 100)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_bottom = 100.0
+grow_horizontal = 0
+
+[node name="MenuButton" type="Button" parent="MenuControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -40.0
+offset_right = 100.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MENU"
+
+[node name="GenerateControl" type="Control" parent="."]
+custom_minimum_size = Vector2(220, 100)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -220.0
+offset_top = -100.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="GenerateButton" type="Button" parent="GenerateControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -40.0
+offset_right = 100.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GENERATE"
+
+[node name="ValueControl" type="Control" parent="."]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Current_Value_Label" type="Label" parent="ValueControl"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.5
+offset_top = -39.0
+offset_right = 100.5
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_alignment = 1
+
+[connection signal="pressed" from="MenuControl/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="GenerateControl/GenerateButton" to="." method="_on_generate_value_button_pressed"]
