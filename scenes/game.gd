@@ -1,5 +1,7 @@
 extends Node
 
+signal quitSignal
+
 @onready var cycle_interval: Timer = $Cycle_Interval
 @onready var gameControlNode: Control = $"."
 @onready var goldValueLabel: Label = $ValueControl/Current_Value_Label
@@ -11,8 +13,16 @@ var totalsResource: TotalsResourceTemplate = preload("res://resources/totals/tot
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	FileManager.loadGameState()
+	if !totalsResource:
+		totalsResource = preload("res://resources/totals/totals_resource.tres")
+	quitSignal.connect(quitGame)
 	buildingManagerNode.connect("toggleVisibilitySignal", Callable(buildingManagerNode ,"toggleVisibilitySignal"))
 	cycle_interval.timeout.connect(run_tick)
+	
+	get_tree().auto_accept_quit = false
+	
+	print(get_tree().auto_accept_quit)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -34,9 +44,6 @@ func run_tick():
 func toggleBuildingUIVisability() -> void:
 	if gameControlNode:
 		buildingManagerNode.emit_signal("toggleVisibilitySignal")
-		var menu = menuScene.instantiate()
-		menu.gameStarted = true
-		gameControlNode.add_child(menu)
 	else:
 		print('no node')
 
@@ -45,6 +52,21 @@ func _on_menu_button_pressed() -> void:
 		toggleBuildingUIVisability()
 		var menu = menuScene.instantiate()
 		menu.gameStarted = true
+		menu.connect("quitSignal", quitGame)
 		gameControlNode.add_child(menu)
 	else:
 		print('no node')
+		
+func quitGame():
+	FileManager.saveGameState()
+
+func _exit_tree() -> void:
+	FileManager.saveGameState()
+	
+#func _notification(what):
+	#if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		#saveGameState()
+	
+#func _notification(notification) -> void:
+	#print("[+] CURRENT REQUEST: ", notification)
+	

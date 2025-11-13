@@ -107,6 +107,7 @@ offset_right = 100.5
 offset_bottom = 39.0
 grow_horizontal = 2
 grow_vertical = 2
+text = "Value: "
 horizontal_alignment = 1
 
 [connection signal="toggleVisibilitySignal" from="BuildingManger" to="." method="_on_building_manger_toggle_visibility_signal"]

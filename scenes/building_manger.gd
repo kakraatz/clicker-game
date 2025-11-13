@@ -52,11 +52,12 @@ func createBuildingButton(buildingResource: Building):
 		printerr('Missing vboxContainer')
 		
 func toggleVisibility():
-	print('gerer')
 	if control:
 		if control.visible:
+			print('hide')
 			control.visible = false
 		else:
 			control.visible = true
+			print('show')
 	else:
 		printerr('No control')

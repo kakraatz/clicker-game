@@ -28,6 +28,10 @@ func buy():
 		totalsResource.currentTickIncrementValue = totalsResource.currentTickIncrementValue + self.building.factory_multiplier
 		building.factory_count += 1
 		building.current_cost = building.current_cost * building.flat_multiplier
+		
+		if (building.factory_count == 1):
+			totalsResource.allBuildings.append(building)
+			print('saved building to array')
 		update()
 
 	

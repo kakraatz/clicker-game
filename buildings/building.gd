@@ -16,7 +16,6 @@ func init(factory_multiplier, initial_cost, name):
 	self.initial_cost = initial_cost
 	self.name = name
 
-
 func buy_building():
 	factory_count += 1
 	current_cost = current_cost * flat_multiplier
