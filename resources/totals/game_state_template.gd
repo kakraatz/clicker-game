@@ -1,6 +1,6 @@
 extends Resource
 
-class_name TotalsResourceTemplate
-var current_value: int
+class_name GameStateTemplate
+var currentGold: int
 var currentTickIncrementValue: float
 var allBuildings: Array[Building] = []

@@ -8,42 +8,42 @@ class_name BuildingButton
 
 @onready var button = $Button
 
-var totalsResource: TotalsResourceTemplate = preload("res://resources/totals/totals_resource.tres")
+var gameStateResource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
 
-@onready var cost_label: Label = $Button/CostLabel
-@onready var name_label: Label = $Button/NameLabel
-@onready var owned_label: Label = $Button/OwnedLabel
+@onready var costLabel: Label = $Button/CostLabel
+@onready var nameLabel: Label = $Button/NameLabel
+@onready var ownedLabel: Label = $Button/OwnedLabel
 
 func _init():
 	if (building):
 		print(building)
-		cost_label.text = building.current_cost
-		name_label.text = building.name
-		owned_label.text = building.factory_count
+		costLabel.text = building.currentCost
+		nameLabel.text = building.name
+		ownedLabel.text = building.factoryCount
 		
 func buy():
 	if !self.disabled:
-		var currentTotal = totalsResource.current_value - building.current_cost
-		totalsResource.current_value = currentTotal
-		totalsResource.currentTickIncrementValue = totalsResource.currentTickIncrementValue + self.building.factory_multiplier
-		building.factory_count += 1
-		building.current_cost = building.current_cost * building.flat_multiplier
+		var currentGold = gameStateResource.currentGold - building.currentCost
+		gameStateResource.currentGold = currentGold
+		gameStateResource.currentTickIncrementValue = gameStateResource.currentTickIncrementValue + self.building.factoryMultiplier
+		building.factoryCount += 1
+		building.currentCost = building.currentCost * building.flatMultiplier
 		
-		if (building.factory_count == 1):
-			totalsResource.allBuildings.append(building)
-			print('saved building to array')
+		#if (building.factory_count == 1):
+			#gameStateResource.allBuildings.append(building)
+			#print('saved building to array')
 		update()
 
 	
 func update():
 	if (building):
-		cost_label.text = str(building.current_cost)
-		owned_label.text =str( building.factory_count)
-		name_label.text = building.name
+		costLabel.text = str(building.currentCost)
+		ownedLabel.text =str( building.factoryCount)
+		nameLabel.text = building.name
 		
-		if (totalsResource && self.building && self.building.current_cost):
-			var currentTotal = totalsResource.current_value
-			if (currentTotal >= self.building.current_cost):
+		if (gameStateResource && self.building && self.building.currentCost):
+			var currentGold = gameStateResource.currentGold
+			if (currentGold >= self.building.currentCost):
 				disabled = false
 			else:
 				disabled = true

@@ -1,10 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://ksm4jt1h5xce"]
+[gd_scene load_steps=3 format=3 uid="uid://ksm4jt1h5xce"]
 
 [ext_resource type="Script" uid="uid://delqcrtlseoea" path="res://scenes/game.gd" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://btxgpjbgcw4lp" path="res://scenes/BuildingManger.tscn" id="2_yqjtg"]
-[ext_resource type="Script" uid="uid://bnt28ybgtrjr0" path="res://buildings/building.gd" id="3_lbhrr"]
-[ext_resource type="Resource" uid="uid://b1ttq6tbu7vgb" path="res://resources/buildings/farm_building_resource.tres" id="4_lbhrr"]
-[ext_resource type="Resource" uid="uid://dybqdfgy3lssh" path="res://resources/buildings/temple_building_resource.tres" id="5_iywne"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -16,7 +13,6 @@ grow_vertical = 2
 script = ExtResource("1_uwrxv")
 
 [node name="BuildingManger" parent="." instance=ExtResource("2_yqjtg")]
-currentBuildings = Array[ExtResource("3_lbhrr")]([ExtResource("4_lbhrr"), ExtResource("5_iywne")])
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1

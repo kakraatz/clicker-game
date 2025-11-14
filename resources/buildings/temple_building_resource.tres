@@ -5,8 +5,8 @@
 [resource]
 script = ExtResource("1_q4cb6")
 id = 2
-factory_multiplier = 5
-initial_cost = 20
-current_cost = 15
+factoryMultiplier = 10
+initialCost = 15
+currentCost = 15
 name = "TEMPLE"
 metadata/_custom_type_script = "uid://bnt28ybgtrjr0"

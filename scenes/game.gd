@@ -9,13 +9,14 @@ signal quitSignal
 @onready var buildingManagerNode: Node = $BuildingManger
 
 var flat_multiplier = 1.32
-var totalsResource: TotalsResourceTemplate = preload("res://resources/totals/totals_resource.tres")
+var gameStateResource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	FileManager.loadGameState()
-	if !totalsResource:
-		totalsResource = preload("res://resources/totals/totals_resource.tres")
+	buildingManagerNode.createButtons()
+	if !gameStateResource:
+		gameStateResource = preload("res://resources/totals/game_state_resource.tres")
 	quitSignal.connect(quitGame)
 	buildingManagerNode.connect("toggleVisibilitySignal", Callable(buildingManagerNode ,"toggleVisibilitySignal"))
 	cycle_interval.timeout.connect(run_tick)
@@ -26,20 +27,20 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var currentValue = totalsResource.current_value
+	var currentGold = gameStateResource.currentGold
 	if goldValueLabel:
-		goldValueLabel.text = 'VALUE: ' + str(currentValue)
+		goldValueLabel.text = 'VALUE: ' + str(currentGold)
 	#can_buy(factory1.current_cost, factory1_button)
 
 func _on_generate_value_button_pressed() -> void:
-	totalsResource.current_value = totalsResource.current_value + 1
-	print(totalsResource.current_value)
+	gameStateResource.currentGold = gameStateResource.currentGold + 1
+	print(gameStateResource.currentGold)
 	
 func run_tick():
 	#print("running")
-	var current_value = totalsResource.current_value
-	var currentTickIncrementAmount = totalsResource.currentTickIncrementValue
-	totalsResource.current_value = current_value + totalsResource.currentTickIncrementValue
+	var currentGold = gameStateResource.currentGold
+	var currentTickIncrementAmount = gameStateResource.currentTickIncrementValue
+	gameStateResource.currentGold = currentGold + gameStateResource.currentTickIncrementValue
 
 func toggleBuildingUIVisability() -> void:
 	if gameControlNode:
