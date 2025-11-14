@@ -25,7 +25,7 @@ func save():
 	var jsonDictionary = {}
 	
 	jsonDictionary["id"] = self.id
-	jsonDictionary["factory_count"] = self.id
+	jsonDictionary["factory_count"] = self.factoryCount
 	jsonDictionary["factory_multiplier"] = self.factoryMultiplier
 	jsonDictionary["initial_cost"] = self.initialCost
 	jsonDictionary["current_cost"] = self.currentCost

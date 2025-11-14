@@ -2,6 +2,7 @@ extends Node
 
 @export var currentBuildings: Array[Building]
 signal toggleVisibilitySignal
+signal updateButtonsSignal
 
 @onready var vboxContainer = $Control/Panel/ScrollContainer/VBoxContainer
 @onready var control = $Control
@@ -19,7 +20,8 @@ var buildingButtons: Array[BuildingButton] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	toggleVisibilitySignal.connect(toggleVisibility)	
+	toggleVisibilitySignal.connect(toggleVisibility)
+	updateButtonsSignal.connect(updateAllButtons)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -76,3 +78,16 @@ func createButtons():
 func updateAllButtons():
 	for buildingButton in buildingButtons:
 		buildingButton.update()
+		calculateGoldPerTick()
+		
+func calculateGoldPerTick():
+	var currentBuildings = gameStateResource.allBuildings
+	var currentGoldPerTick = 0.0
+	
+	for building in currentBuildings:
+		var buildingGoldPerTickValue = building.factoryMultiplier
+		var buildingCount = building.factoryCount
+		var buildingGoldPerTick = buildingGoldPerTickValue * buildingCount
+		currentGoldPerTick = currentGoldPerTick + buildingGoldPerTick
+	
+	gameStateResource.currentTickIncrementValue = currentGoldPerTick

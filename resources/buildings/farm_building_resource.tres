@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_sx70b")
 id = 1
-factoryMultiplier = 5
+factoryMultiplier = 1
 initialCost = 10
 currentCost = 10
 name = "FARM"

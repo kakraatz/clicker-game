@@ -15,6 +15,7 @@ var gameStateResource: GameStateTemplate = preload("res://resources/totals/game_
 func _ready() -> void:
 	FileManager.loadGameState()
 	buildingManagerNode.createButtons()
+	buildingManagerNode.emit_signal("updateButtonsSignal")
 	if !gameStateResource:
 		gameStateResource = preload("res://resources/totals/game_state_resource.tres")
 	quitSignal.connect(quitGame)
