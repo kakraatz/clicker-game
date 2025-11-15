@@ -4,6 +4,9 @@ it currently is?
 
 Why do we even have a menu screen? Shouldn't the game just load?
 
+Figure out building math 
+
+Building unlock at specific target values
 
 T1 Buildings
 Farm
