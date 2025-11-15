@@ -3,3 +3,43 @@ Is it better to use a global script for the current value total vs a resource li
 it currently is? 
 
 Why do we even have a menu screen? Shouldn't the game just load?
+
+
+T1 Buildings
+Farm
+Woodcutter
+Cottage
+Windmill
+Quarry
+Church
+Potter
+Bakery
+Fishing Dock
+Hunter Cabin
+Herbalist
+
+T2
+Blacksmith
+Stables
+Market Stall
+Tannery
+Butcher
+Workshop
+Tavern
+Watchtower
+Barracks
+Archery Range
+Amorer 
+Town Hall
+Merchant Guild
+
+T3
+Keep
+Castle
+Scholars Tower
+Harbor
+Royal Mint
+Knights Tower
+Wizards Tower
+Arcane Library
+Dragon Roost
