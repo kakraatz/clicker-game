@@ -18,3 +18,4 @@ config/icon="res://icon.svg"
 [autoload]
 
 FileManager="*res://global_scripts/file_manager.gd"
+AudioManager="*res://global_scripts/audio_manager.gd"

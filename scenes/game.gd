@@ -25,6 +25,8 @@ func _ready() -> void:
 	
 	get_tree().auto_accept_quit = false
 	
+	initializeAudio()
+	
 	print(get_tree().auto_accept_quit)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -36,7 +38,8 @@ func _process(delta: float) -> void:
 
 func _on_generate_value_button_pressed() -> void:
 	gameStateResource.currentGold = gameStateResource.currentGold + 1
-	print(gameStateResource.currentGold)
+	AudioManager.on_generate_button_pressed()
+	
 	
 func run_tick():
 	#print("running")
@@ -65,6 +68,14 @@ func quitGame():
 
 func _exit_tree() -> void:
 	FileManager.saveGameState()
+	
+func initializeAudio():
+	var audioStreamPlayerArray = AudioManager.createAudioStreamPlayers()
+	
+	if audioStreamPlayerArray:
+		for audioStreamPlayer in audioStreamPlayerArray:
+			add_child(audioStreamPlayer)
+	
 	
 #func _notification(what):
 	#if what == NOTIFICATION_WM_CLOSE_REQUEST:

@@ -52,3 +52,4 @@ func update():
 
 func _on_button_pressed() -> void:
 	buy()
+	AudioManager.on_building_button_pressed()
