@@ -10,11 +10,19 @@ class_name Building
 @export var buttonLabel = ""
 @export var name = ""
 @export var flatMultiplier = 1.3
+var unlocked = false
 
 func init(factoryMultiplier, initialCost, name):
 	self.factoryMultiplier = factoryMultiplier
 	self.initialCost = initialCost
 	self.name = name
+	
+func unlock_building(currentGold):
+	if currentGold >= self.initialCost:
+		self.unlocked = true
+		return true
+	else:
+		return false
 
 func buy_building():
 	factoryCount += 1

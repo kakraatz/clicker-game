@@ -1,12 +1,21 @@
 TODO
 Is it better to use a global script for the current value total vs a resource like 
-it currently is? 
+it currently is?
 
-Why do we even have a menu screen? Shouldn't the game just load?
+*KNOWN BUGS* ======================================
+Menu bug - buildings disappearing/reappearing on menu clicks > should go away when getting rid of menu
+Farm cost is not scaling on purchase
+===================================================
 
-Figure out building math 
-
-Building unlock at specific target values
+Figure out resolution
+Get rid of menu -> Turn into menu button (Audio control, manual save, etc.)
+Figure out building math
+Make gold coin sprite and add to generate button
+Create prestige mechanic
+Create upgrades
+Create raiding mechanic/mini-game
+Flesh out building unlock passive effects + building on building passive effects
+Sound effects on clicks
 
 T1 Buildings
 Farm

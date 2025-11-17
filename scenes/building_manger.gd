@@ -1,5 +1,7 @@
 extends Node
 
+class_name BuildingManager
+
 @export var currentBuildings: Array[Building]
 signal toggleVisibilitySignal
 signal updateButtonsSignal
@@ -9,10 +11,11 @@ signal updateButtonsSignal
 
 var gameStateResource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
 var buildingButtonScene: PackedScene = preload("res://scenes/buildingbutton.tscn")
-#var allBuildingResources: Array[Building] = [
+var allBuildingsUnlockable: Array[Building] = [
 	#preload("res://resources/buildings/farm_building_resource.tres"),
-	#preload("res://resources/buildings/temple_building_resource.tres"),
-#]
+	preload("res://resources/buildings/church_building_resource.tres"),
+	preload("res://resources/buildings/woodcutter_building_resource.tres")
+]
 var farmBuildingResource = preload("res://resources/buildings/farm_building_resource.tres")
 
 var value 
@@ -31,6 +34,8 @@ func _process(delta: float) -> void:
 	if (buildingButtons):
 		for buildingButton in buildingButtons:
 			buildingButton.update()
+	for building in allBuildingsUnlockable:
+		unlockBuilding(building)
 			
 func can_buy(current_cost, button) -> bool:
 	if value >= current_cost:
@@ -91,3 +96,21 @@ func calculateGoldPerTick():
 		currentGoldPerTick = currentGoldPerTick + buildingGoldPerTick
 	
 	gameStateResource.currentTickIncrementValue = currentGoldPerTick
+	
+func unlockBuilding(building: Building):
+	for building_object in gameStateResource.allBuildings:
+		if building_object.id == building.id:
+			return
+		elif building.unlocked == false:
+			if building.unlock_building(gameStateResource.currentGold) == true:
+				gameStateResource.allBuildings.append(building)
+				createBuildingButton(building)
+				building.unlocked = true
+		else:
+			return
+			
+func checkBuilding():
+	for template in allBuildingsUnlockable:
+		for building in gameStateResource.allBuildings:
+			if template.id == building.id:
+				template.unlocked = true

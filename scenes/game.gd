@@ -6,7 +6,7 @@ signal quitSignal
 @onready var gameControlNode: Control = $"."
 @onready var goldValueLabel: Label = $ValueControl/Current_Value_Label
 @onready var menuScene: PackedScene = preload("res://scenes/menu.tscn")
-@onready var buildingManagerNode: Node = $BuildingManger
+@onready var buildingManagerNode: BuildingManager = $BuildingManger
 
 var flat_multiplier = 1.32
 var gameStateResource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
@@ -15,6 +15,7 @@ var gameStateResource: GameStateTemplate = preload("res://resources/totals/game_
 func _ready() -> void:
 	FileManager.loadGameState()
 	buildingManagerNode.createButtons()
+	buildingManagerNode.checkBuilding()
 	buildingManagerNode.emit_signal("updateButtonsSignal")
 	if !gameStateResource:
 		gameStateResource = preload("res://resources/totals/game_state_resource.tres")

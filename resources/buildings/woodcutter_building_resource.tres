@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Building" load_steps=2 format=3 uid="uid://dh1eo0y5j2mmb"]
+
+[ext_resource type="Script" uid="uid://bnt28ybgtrjr0" path="res://buildings/building.gd" id="1_wrpa4"]
+
+[resource]
+script = ExtResource("1_wrpa4")
+id = 3
+factoryMultiplier = 20
+initialCost = 30
+currentCost = 30
+name = "WOODCUTTER"
+metadata/_custom_type_script = "uid://bnt28ybgtrjr0"
