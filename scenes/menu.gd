@@ -1,14 +1,14 @@
 extends Node
 
 class_name GameMenu
-signal quitSignal
+signal quit_signal
 
 @onready var startButton = $Button_Manager/GridContainer/Start_Button
-var gameStarted = false
+var game_started = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	if gameStarted:
+	if game_started:
 		startButton.text = 'RESUME'
 
 
@@ -18,7 +18,7 @@ func _process(delta: float) -> void:
 
 
 func _on_start_button_pressed() -> void:
-	if (!gameStarted):
+	if (!game_started):
 		get_tree().change_scene_to_file("res://scenes/game.tscn")
 	else:
 		queue_free()
@@ -28,5 +28,5 @@ func _on_options_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	quitSignal.emit()
+	quit_signal.emit()
 	get_tree().quit()

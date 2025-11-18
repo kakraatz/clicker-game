@@ -3,75 +3,83 @@ extends Resource
 class_name Building
 
 @export var id = 0
-@export var factoryCount = 0
-@export var factoryMultiplier = 0
-@export var initialCost = 0
-@export var currentCost = 0
-@export var buttonLabel = ""
+@export var factory_count = 0
+const base_gold_multiplier = 10
+const base_exponent_constant = 1.2
+var gold_multiplier = 0
+@export var button_label = ""
 @export var name = ""
-@export var flatMultiplier = 1.3
+@export var flat_multiplier = 2
+@export var flat_base_cost = 50
+var initial_cost = 0
 var unlocked = false
+var current_cost = 0
 
-func init(factoryMultiplier, initialCost, name):
-	self.factoryMultiplier = factoryMultiplier
-	self.initialCost = initialCost
-	self.name = name
+const base_gold_output: Array[int] = [1, 5, ]
+
+func _init():
+	calculate_initial_cost()
 	
-func unlock_building(currentGold):
-	if currentGold >= self.initialCost:
+func unlock_building(current_gold):
+	if current_gold >= self.initial_cost:
 		self.unlocked = true
 		return true
 	else:
 		return false
 
 func buy_building():
-	factoryCount += 1
-	currentCost = currentCost * flatMultiplier
-	buttonLabel = self.name + ' ' + str(currentCost)
+	factory_count += 1
+	current_cost = current_cost * flat_multiplier
+	button_label = self.name + ' ' + str(current_cost)
 	
 func save():
-	var jsonDictionary = {}
+	var json_dictionary = {}
 	
-	jsonDictionary["id"] = self.id
-	jsonDictionary["factory_count"] = self.factoryCount
-	jsonDictionary["factory_multiplier"] = self.factoryMultiplier
-	jsonDictionary["initial_cost"] = self.initialCost
-	jsonDictionary["current_cost"] = self.currentCost
-	jsonDictionary["name"] = self.name
-	jsonDictionary["flat_multiplier"] = self.factoryMultiplier
+	json_dictionary["id"] = self.id
+	json_dictionary["factory_count"] = self.factory_count
+	json_dictionary["factory_multiplier"] = self.factoryMultiplier
+	json_dictionary["initial_cost"] = self.initial_cost
+	json_dictionary["current_cost"] = self.current_cost
+	json_dictionary["name"] = self.name
+	json_dictionary["flat_multiplier"] = self.factoryMultiplier
 	
-	var jsonString = JSON.stringify(jsonDictionary)
+	var json_string = JSON.stringify(json_dictionary)
 	#data = {key: getattr(Building, key) for key in Building.annotations}
 
-	return jsonString
+	return json_string
 	
 static func load(json):
-	var newBuilding = Building.new()
+	var new_building = Building.new()
 	
 	var id = json["id"]
-	var factoryCount = json["factory_count"]
-	var factoryMultiplier = json["factory_multiplier"]
-	var initialCost = json["initial_cost"]
-	var currentCost = json["current_cost"]
+	var factory_count = json["factory_count"]
+	var base_gold_multiplier = json["base_gold_multiplier"]
+	var initial_cost = json["initial_cost"]
+	var current_cost = json["current_cost"]
 	var name = json["name"]
-	var flatMultiplier = json["flat_multiplier"]
+	var flat_multiplier = json["flat_multiplier"]
 
-	newBuilding.id = id
-	newBuilding.factoryCount = factoryCount
-	newBuilding.factoryMultiplier = factoryMultiplier
-	newBuilding.initialCost = initialCost
-	newBuilding.currentCost = currentCost
-	newBuilding.name = name
-	newBuilding.flatMultiplier = flatMultiplier
+	new_building.id = id
+	new_building.factory_count = factory_count
+	new_building.base_gold_multiplier = base_gold_multiplier
+	new_building.initial_cost = initial_cost
+	new_building.current_cost = current_cost
+	new_building.name = name
+	new_building.flat_multiplier = flat_multiplier
 	
-	return newBuilding
+	return new_building
 	
 
-	#var allBuiildingsJSON = jsonString[all_buildings]
-	#var jsonDictionary = JSON.parse_string(allBuiildingsJSON)
-	#var allBuildings = jsonDictionat
-	#
-	#var id = jsonString["id"]
-	#
-	#var building = Building.new()
+func calculate_initial_cost():
+	if self.id == 1:
+		self.initial_cost = 10
+	elif self.id == 2:
+		self.initial_cost = 20
+	else:
+		self.initial_cost = flat_base_cost * (flat_multiplier ** self.id)
+	self.current_cost = self.initial_cost
+	
+func calculate_base_gold_multiplier():
+	self.gold_multiplier = base_gold_multiplier * base_exponent_constant**(self.id -1)
+	
 	

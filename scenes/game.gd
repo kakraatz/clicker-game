@@ -1,26 +1,26 @@
 extends Node
 
-signal quitSignal
+signal quit_signal
 
 @onready var cycle_interval: Timer = $Cycle_Interval
-@onready var gameControlNode: Control = $"."
-@onready var goldValueLabel: Label = $ValueControl/Current_Value_Label
-@onready var menuScene: PackedScene = preload("res://scenes/menu.tscn")
-@onready var buildingManagerNode: BuildingManager = $BuildingManger
+@onready var game_control_node: Control = $"."
+@onready var gold_value_label: Label = $ValueControl/Current_Value_Label
+@onready var menu_scene: PackedScene = preload("res://scenes/menu.tscn")
+@onready var building_manager_node: BuildingManager = $BuildingManger
 
 var flat_multiplier = 1.32
-var gameStateResource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
+var game_state_resource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	FileManager.loadGameState()
-	buildingManagerNode.createButtons()
-	buildingManagerNode.checkBuilding()
-	buildingManagerNode.emit_signal("updateButtonsSignal")
-	if !gameStateResource:
-		gameStateResource = preload("res://resources/totals/game_state_resource.tres")
-	quitSignal.connect(quitGame)
-	buildingManagerNode.connect("toggleVisibilitySignal", Callable(buildingManagerNode ,"toggleVisibilitySignal"))
+	building_manager_node.createButtons()
+	building_manager_node.checkBuilding()
+	building_manager_node.emit_signal("update_buttons_signal")
+	if !game_state_resource:
+		game_state_resource = preload("res://resources/totals/game_state_resource.tres")
+	quit_signal.connect(quitGame)
+	building_manager_node.connect("toggle_visibility_signal", Callable(building_manager_node ,"toggle_visibility_signal"))
 	cycle_interval.timeout.connect(run_tick)
 	
 	get_tree().auto_accept_quit = false
@@ -31,35 +31,34 @@ func _ready() -> void:
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var currentGold = gameStateResource.currentGold
-	if goldValueLabel:
-		goldValueLabel.text = 'VALUE: ' + str(currentGold)
+	var current_gold = game_state_resource.current_gold
+	if gold_value_label:
+		gold_value_label.text = 'VALUE: ' + str(current_gold)
 	#can_buy(factory1.current_cost, factory1_button)
 
 func _on_generate_value_button_pressed() -> void:
-	gameStateResource.currentGold = gameStateResource.currentGold + 1
+	game_state_resource.current_gold = game_state_resource.current_gold + 1
 	AudioManager.on_generate_button_pressed()
 	
 	
 func run_tick():
 	#print("running")
-	var currentGold = gameStateResource.currentGold
-	var currentTickIncrementAmount = gameStateResource.currentTickIncrementValue
-	gameStateResource.currentGold = currentGold + gameStateResource.currentTickIncrementValue
+	var current_gold = game_state_resource.current_gold
+	game_state_resource.current_gold = current_gold + game_state_resource.current_tick_increment_value
 
-func toggleBuildingUIVisability() -> void:
-	if gameControlNode:
-		buildingManagerNode.emit_signal("toggleVisibilitySignal")
+func toggle_building_ui_visability() -> void:
+	if game_control_node:
+		building_manager_node.emit_signal("toggle_visibility_signal")
 	else:
 		print('no node')
 
 func _on_menu_button_pressed() -> void:
-	if gameControlNode:
-		toggleBuildingUIVisability()
-		var menu = menuScene.instantiate()
+	if game_control_node:
+		toggle_building_ui_visability()
+		var menu = menu_scene.instantiate()
 		menu.gameStarted = true
-		menu.connect("quitSignal", quitGame)
-		gameControlNode.add_child(menu)
+		menu.connect("quit_signal", quitGame)
+		game_control_node.add_child(menu)
 	else:
 		print('no node')
 		

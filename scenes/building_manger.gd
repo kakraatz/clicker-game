@@ -2,39 +2,39 @@ extends Node
 
 class_name BuildingManager
 
-@export var currentBuildings: Array[Building]
-signal toggleVisibilitySignal
-signal updateButtonsSignal
+@export var current_buildings: Array[Building]
+signal toggle_visibility_signal
+signal update_buttons_signal
 
-@onready var vboxContainer = $Control/Panel/ScrollContainer/VBoxContainer
+@onready var vbox_container = $Control/Panel/ScrollContainer/VBoxContainer
 @onready var control = $Control
 
-var gameStateResource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
-var buildingButtonScene: PackedScene = preload("res://scenes/buildingbutton.tscn")
-var allBuildingsUnlockable: Array[Building] = [
+var game_state_resource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
+var building_button_scene: PackedScene = preload("res://scenes/buildingbutton.tscn")
+var all_buildings_unlockable: Array[Building] = [
 	#preload("res://resources/buildings/farm_building_resource.tres"),
 	preload("res://resources/buildings/church_building_resource.tres"),
 	preload("res://resources/buildings/woodcutter_building_resource.tres")
 ]
-var farmBuildingResource = preload("res://resources/buildings/farm_building_resource.tres")
+var farm_building_resource = preload("res://resources/buildings/farm_building_resource.tres")
 
 var value 
-var buildingButtons: Array[BuildingButton] = []
+var building_buttons: Array[BuildingButton] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	toggleVisibilitySignal.connect(toggleVisibility)
-	updateButtonsSignal.connect(updateAllButtons)
+	toggle_visibility_signal.connect(toggle_visibility)
+	update_buttons_signal.connect(update_all_buttons)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	# TODO replace this logic with signals for better performance 
-	var currentGold = gameStateResource.currentGold
-	if (buildingButtons):
-		for buildingButton in buildingButtons:
-			buildingButton.update()
-	for building in allBuildingsUnlockable:
+	var current_gold = game_state_resource.current_gold
+	if (building_buttons):
+		for building_button in building_buttons:
+			building_button.update()
+	for building in all_buildings_unlockable:
 		unlockBuilding(building)
 			
 func can_buy(current_cost, button) -> bool:
@@ -46,17 +46,17 @@ func can_buy(current_cost, button) -> bool:
 		return false
 	
 # Instantiates a new button to the scene tree
-func createBuildingButton(buildingResource: Building):
-	var buildingButton: BuildingButton = buildingButtonScene.instantiate()
-	buildingButton.building = buildingResource
-	if (vboxContainer):
-		vboxContainer.add_child(buildingButton)
-		buildingButton.update()
-		buildingButtons.append(buildingButton)
+func create_building_button(building_resource: Building):
+	var building_button: BuildingButton = building_button_scene.instantiate()
+	building_button.building = building_resource
+	if (vbox_container):
+		vbox_container.add_child(building_button)
+		building_button.update()
+		building_buttons.append(building_button)
 	else:
-		printerr('Missing vboxContainer')
+		printerr('Missing vbox_container')
 		
-func toggleVisibility():
+func toggle_visibility():
 	if control:
 		if control.visible:
 			print('hide')
@@ -68,49 +68,51 @@ func toggleVisibility():
 		printerr('No control')
 		
 func createButtons(): 
-	var currentBuildings = gameStateResource.allBuildings
+	var current_buildings = game_state_resource.all_buildings
 	#Creates building buttons for each building that is passed in
-	if (currentBuildings.is_empty()):
-		createBuildingButton(farmBuildingResource)
-		var newFarm: Building = load("res://resources/buildings/farm_building_resource.tres") as Building
-		currentBuildings.append(newFarm)
-		gameStateResource.allBuildings = currentBuildings
-	elif (currentBuildings):
-		for building in currentBuildings:
-			createBuildingButton(building)
+	if (current_buildings.is_empty()):
+		create_building_button(farm_building_resource)
+		var new_farm: Building = load("res://resources/buildings/farm_building_resource.tres") as Building
+		current_buildings.append(new_farm)
+		game_state_resource.all_buildings = current_buildings
+	elif (current_buildings):
+		for building in current_buildings:
+			create_building_button(building)
 
 		
-func updateAllButtons():
-	for buildingButton in buildingButtons:
-		buildingButton.update()
-		calculateGoldPerTick()
+func update_all_buttons():
+	for building in all_buildings_unlockable:
+		building.calculate_initial_cost()
+	for building_button in building_buttons:
+		building_button.update()
+		calculate_gold_per_tick()
 		
-func calculateGoldPerTick():
-	var currentBuildings = gameStateResource.allBuildings
-	var currentGoldPerTick = 0.0
+func calculate_gold_per_tick():
+	var current_buildings = game_state_resource.all_buildings
+	var current_gold_per_tick = 0.0
 	
-	for building in currentBuildings:
-		var buildingGoldPerTickValue = building.factoryMultiplier
-		var buildingCount = building.factoryCount
-		var buildingGoldPerTick = buildingGoldPerTickValue * buildingCount
-		currentGoldPerTick = currentGoldPerTick + buildingGoldPerTick
+	for building in current_buildings:
+		var building_gold_per_tick_value = building.base_gold_multiplier
+		var building_count = building.factory_count
+		var building_gold_per_tick = building_gold_per_tick_value * building_count
+		current_gold_per_tick = current_gold_per_tick + building_gold_per_tick
 	
-	gameStateResource.currentTickIncrementValue = currentGoldPerTick
+	game_state_resource.current_tick_increment_value = current_gold_per_tick
 	
 func unlockBuilding(building: Building):
-	for building_object in gameStateResource.allBuildings:
+	for building_object in game_state_resource.all_buildings:
 		if building_object.id == building.id:
 			return
 		elif building.unlocked == false:
-			if building.unlock_building(gameStateResource.currentGold) == true:
-				gameStateResource.allBuildings.append(building)
-				createBuildingButton(building)
+			if building.unlock_building(game_state_resource.current_gold) == true:
+				game_state_resource.all_buildings.append(building)
+				create_building_button(building)
 				building.unlocked = true
 		else:
 			return
 			
 func checkBuilding():
-	for template in allBuildingsUnlockable:
-		for building in gameStateResource.allBuildings:
+	for template in all_buildings_unlockable:
+		for building in game_state_resource.all_buildings:
 			if template.id == building.id:
 				template.unlocked = true

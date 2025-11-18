@@ -1,6 +1,6 @@
 extends Resource
 
 class_name GameStateTemplate
-var currentGold: int
-var currentTickIncrementValue: float
-var allBuildings: Array[Building] = []
+var current_gold: int
+var current_tick_increment_value: float
+var all_buildings: Array[Building] = []
