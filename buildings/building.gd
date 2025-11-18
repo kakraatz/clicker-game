@@ -4,7 +4,7 @@ class_name Building
 
 @export var id = 0
 @export var factory_count = 0
-const base_gold_multiplier = 10
+var base_gold_multiplier = 10
 const base_exponent_constant = 1.2
 var gold_multiplier = 0
 @export var button_label = ""
@@ -37,11 +37,11 @@ func save():
 	
 	json_dictionary["id"] = self.id
 	json_dictionary["factory_count"] = self.factory_count
-	json_dictionary["factory_multiplier"] = self.factoryMultiplier
+	json_dictionary["base_gold_multiplier"] = self.base_gold_multiplier
 	json_dictionary["initial_cost"] = self.initial_cost
 	json_dictionary["current_cost"] = self.current_cost
 	json_dictionary["name"] = self.name
-	json_dictionary["flat_multiplier"] = self.factoryMultiplier
+	json_dictionary["flat_multiplier"] = self.flat_multiplier
 	
 	var json_string = JSON.stringify(json_dictionary)
 	#data = {key: getattr(Building, key) for key in Building.annotations}
@@ -80,6 +80,6 @@ func calculate_initial_cost():
 	self.current_cost = self.initial_cost
 	
 func calculate_base_gold_multiplier():
-	self.gold_multiplier = base_gold_multiplier * base_exponent_constant**(self.id -1)
+	self.gold_multiplier = base_gold_multiplier * base_exponent_constant**(self.id - 1)
 	
 	
