@@ -15,7 +15,7 @@ var initial_cost = 0
 var unlocked = false
 var current_cost = 0
 
-const base_gold_output: Array[int] = [1, 5, ]
+#const base_gold_output: Array[int] = [1, 5, ]
 
 func _init():
 	calculate_initial_cost()
@@ -37,11 +37,11 @@ func save():
 	
 	json_dictionary["id"] = self.id
 	json_dictionary["factory_count"] = self.factory_count
-	json_dictionary["factory_multiplier"] = self.factoryMultiplier
+	json_dictionary["gold_multiplier"] = self.gold_multiplier
 	json_dictionary["initial_cost"] = self.initial_cost
 	json_dictionary["current_cost"] = self.current_cost
 	json_dictionary["name"] = self.name
-	json_dictionary["flat_multiplier"] = self.factoryMultiplier
+	#json_dictionary["flat_multiplier"] = self.factory_multiplier
 	
 	var json_string = JSON.stringify(json_dictionary)
 	#data = {key: getattr(Building, key) for key in Building.annotations}
@@ -53,19 +53,19 @@ static func load(json):
 	
 	var id = json["id"]
 	var factory_count = json["factory_count"]
-	var base_gold_multiplier = json["base_gold_multiplier"]
+	var gold_multiplier = json["gold_multiplier"]
 	var initial_cost = json["initial_cost"]
 	var current_cost = json["current_cost"]
 	var name = json["name"]
-	var flat_multiplier = json["flat_multiplier"]
+	#var flat_multiplier = json["flat_multiplier"]
 
 	new_building.id = id
 	new_building.factory_count = factory_count
-	new_building.base_gold_multiplier = base_gold_multiplier
+	new_building.gold_multiplier = gold_multiplier
 	new_building.initial_cost = initial_cost
 	new_building.current_cost = current_cost
 	new_building.name = name
-	new_building.flat_multiplier = flat_multiplier
+	#new_building.flat_multiplier = flat_multiplier
 	
 	return new_building
 	

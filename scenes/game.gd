@@ -20,7 +20,7 @@ func _ready() -> void:
 	if !game_state_resource:
 		game_state_resource = preload("res://resources/totals/game_state_resource.tres")
 	quit_signal.connect(quitGame)
-	building_manager_node.connect("toggle_visibility_signal", Callable(building_manager_node ,"toggle_visibility_signal"))
+	building_manager_node.connect("toggleVisibilitySignal", Callable(building_manager_node ,"toggleVisibilitySignal"))
 	cycle_interval.timeout.connect(run_tick)
 	
 	get_tree().auto_accept_quit = false
@@ -48,7 +48,7 @@ func run_tick():
 
 func toggle_building_ui_visability() -> void:
 	if game_control_node:
-		building_manager_node.emit_signal("toggle_visibility_signal")
+		building_manager_node.emit_signal("toggleVisibilitySignal")
 	else:
 		print('no node')
 
@@ -56,17 +56,17 @@ func _on_menu_button_pressed() -> void:
 	if game_control_node:
 		toggle_building_ui_visability()
 		var menu = menu_scene.instantiate()
-		menu.gameStarted = true
+		menu.game_started = true
 		menu.connect("quit_signal", quitGame)
 		game_control_node.add_child(menu)
 	else:
 		print('no node')
 		
 func quitGame():
-	FileManager.saveGameState()
+	FileManager.save_game_state()
 
 func _exit_tree() -> void:
-	FileManager.saveGameState()
+	FileManager.save_game_state()
 	
 func initializeAudio():
 	var audioStreamPlayerArray = AudioManager.createAudioStreamPlayers()

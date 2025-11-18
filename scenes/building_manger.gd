@@ -3,7 +3,7 @@ extends Node
 class_name BuildingManager
 
 @export var current_buildings: Array[Building]
-signal toggle_visibility_signal
+signal toggleVisibilitySignal
 signal update_buttons_signal
 
 @onready var vbox_container = $Control/Panel/ScrollContainer/VBoxContainer
@@ -12,7 +12,6 @@ signal update_buttons_signal
 var game_state_resource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
 var building_button_scene: PackedScene = preload("res://scenes/buildingbutton.tscn")
 var all_buildings_unlockable: Array[Building] = [
-	#preload("res://resources/buildings/farm_building_resource.tres"),
 	preload("res://resources/buildings/church_building_resource.tres"),
 	preload("res://resources/buildings/woodcutter_building_resource.tres")
 ]
@@ -23,7 +22,7 @@ var building_buttons: Array[BuildingButton] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	toggle_visibility_signal.connect(toggle_visibility)
+	toggleVisibilitySignal.connect(toggle_visibility)
 	update_buttons_signal.connect(update_all_buttons)
 	
 
@@ -35,7 +34,7 @@ func _process(delta: float) -> void:
 		for building_button in building_buttons:
 			building_button.update()
 	for building in all_buildings_unlockable:
-		unlockBuilding(building)
+		unlock_building(building)
 			
 func can_buy(current_cost, button) -> bool:
 	if value >= current_cost:
@@ -71,8 +70,8 @@ func createButtons():
 	var current_buildings = game_state_resource.all_buildings
 	#Creates building buttons for each building that is passed in
 	if (current_buildings.is_empty()):
-		create_building_button(farm_building_resource)
 		var new_farm: Building = load("res://resources/buildings/farm_building_resource.tres") as Building
+		create_building_button(new_farm)
 		current_buildings.append(new_farm)
 		game_state_resource.all_buildings = current_buildings
 	elif (current_buildings):
@@ -99,7 +98,7 @@ func calculate_gold_per_tick():
 	
 	game_state_resource.current_tick_increment_value = current_gold_per_tick
 	
-func unlockBuilding(building: Building):
+func unlock_building(building: Building):
 	for building_object in game_state_resource.all_buildings:
 		if building_object.id == building.id:
 			return
