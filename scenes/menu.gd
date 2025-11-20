@@ -1,6 +1,7 @@
 extends Node
 
 class_name GameMenu
+
 signal quit_signal
 
 @onready var startButton = $Button_Manager/GridContainer/Start_Button
@@ -11,11 +12,9 @@ func _ready() -> void:
 	if game_started:
 		startButton.text = 'RESUME'
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-
 
 func _on_start_button_pressed() -> void:
 	if (!game_started):
@@ -25,7 +24,6 @@ func _on_start_button_pressed() -> void:
 
 func _on_options_button_pressed() -> void:
 	pass # Replace with function body.
-
 
 func _on_quit_button_pressed() -> void:
 	quit_signal.emit()

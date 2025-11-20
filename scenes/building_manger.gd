@@ -3,7 +3,8 @@ extends Node
 class_name BuildingManager
 
 @export var current_buildings: Array[Building]
-signal toggle_visibility_signal
+
+signal toggleVisibilitySignal
 signal update_buttons_signal
 
 @onready var vbox_container = $Control/Panel/ScrollContainer/VBoxContainer
@@ -23,7 +24,7 @@ var building_buttons: Array[BuildingButton] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	toggle_visibility_signal.connect(toggle_visibility)
+	toggleVisibilitySignal.connect(toggle_visibility)
 	update_buttons_signal.connect(update_all_buttons)
 	
 
@@ -71,12 +72,14 @@ func createButtons():
 	var current_buildings = game_state_resource.all_buildings
 	#Creates building buttons for each building that is passed in
 	if (current_buildings.is_empty()):
+		farm_building_resource.calculate_initial_cost()
 		create_building_button(farm_building_resource)
 		var new_farm: Building = load("res://resources/buildings/farm_building_resource.tres") as Building
 		current_buildings.append(new_farm)
 		game_state_resource.all_buildings = current_buildings
 	elif (current_buildings):
 		for building in current_buildings:
+			building.calculate_initial_cost()
 			create_building_button(building)
 
 		

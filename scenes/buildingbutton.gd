@@ -25,7 +25,7 @@ func buy():
 	if !self.disabled:
 		var current_gold = game_state_resource.current_gold - building.current_cost
 		game_state_resource.current_gold = current_gold
-		game_state_resource.current_tick_increment_value = game_state_resource.current_tick_increment_value + self.building.factoryMultiplier
+		game_state_resource.current_tick_increment_value = game_state_resource.current_tick_increment_value + self.building.flat_multiplier
 		building.factory_count += 1
 		building.current_cost = building.current_cost * building.flat_multiplier
 		
