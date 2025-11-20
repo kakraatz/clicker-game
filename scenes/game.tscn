@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://ksm4jt1h5xce"]
 
 [ext_resource type="Script" uid="uid://delqcrtlseoea" path="res://scenes/game.gd" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://btxgpjbgcw4lp" path="res://scenes/BuildingManger.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://btxgpjbgcw4lp" path="res://scenes/BuildingManager.tscn" id="2_yqjtg"]
 [ext_resource type="Texture2D" uid="uid://bm488ro4ql6db" path="res://assets/sprites/gold_coin.png" id="3_lnu2h"]
 
 [node name="Game" type="Control"]
@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_uwrxv")
 
-[node name="BuildingManger" parent="." instance=ExtResource("2_yqjtg")]
+[node name="BuildingManager" parent="." instance=ExtResource("2_yqjtg")]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -27,7 +27,7 @@ color = Color(0.52906674, 0.5290667, 0.5290667, 1)
 [node name="Cycle_Interval" type="Timer" parent="."]
 autostart = true
 
-[node name="MenuControl" type="Control" parent="."]
+[node name="MenuButtonControl" type="Control" parent="."]
 custom_minimum_size = Vector2(220, 100)
 layout_mode = 1
 anchors_preset = 1
@@ -37,7 +37,7 @@ offset_left = -220.0
 offset_bottom = 100.0
 grow_horizontal = 0
 
-[node name="MenuButton" type="Button" parent="MenuControl"]
+[node name="MenuButton" type="Button" parent="MenuButtonControl"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -109,6 +109,20 @@ grow_vertical = 2
 text = "Value: "
 horizontal_alignment = 1
 
-[connection signal="toggleVisibilitySignal" from="BuildingManger" to="." method="_on_building_manger_toggle_visibility_signal"]
-[connection signal="pressed" from="MenuControl/MenuButton" to="." method="_on_menu_button_pressed"]
+[node name="MenuControl" type="Control" parent="."]
+custom_minimum_size = Vector2(350, 350)
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.4
+anchor_right = 0.5
+anchor_bottom = 0.6
+offset_left = -175.0
+offset_top = -175.0
+offset_right = 175.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="toggleVisibilitySignal" from="BuildingManager" to="." method="_on_building_manger_toggle_visibility_signal"]
+[connection signal="pressed" from="MenuButtonControl/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="GenerateControl/GenerateButton" to="." method="_on_generate_value_button_pressed"]

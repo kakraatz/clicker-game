@@ -45,10 +45,10 @@ grow_vertical = 2
 theme_override_constants/h_separation = 9
 theme_override_constants/v_separation = 20
 
-[node name="Start_Button" type="Button" parent="Button_Manager/GridContainer"]
+[node name="Resume_Button" type="Button" parent="Button_Manager/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "START"
+text = "RESUME"
 
 [node name="Options_Button" type="Button" parent="Button_Manager/GridContainer"]
 layout_mode = 2
@@ -60,6 +60,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "QUIT"
 
-[connection signal="pressed" from="Button_Manager/GridContainer/Start_Button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Button_Manager/GridContainer/Resume_Button" to="." method="_on_resume_button_pressed"]
 [connection signal="pressed" from="Button_Manager/GridContainer/Options_Button" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="Button_Manager/GridContainer/Quit_Button" to="." method="_on_quit_button_pressed"]

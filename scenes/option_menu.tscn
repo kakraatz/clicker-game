@@ -1,0 +1,133 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0d8cs50ylgei"]
+
+[ext_resource type="Script" uid="uid://dkanoyb1hbqfb" path="res://scenes/option_menu.gd" id="1_hecwe"]
+
+[node name="OptionMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hecwe")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.50752926, 0.31034768, 0.17799294, 1)
+
+[node name="OptionsButtonControl" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="OptionsButtonControl"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsButtonControl/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsButtonControl/ScrollContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="MasterVolumeControl" type="Control" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="MasterVolumeSliderLabel" type="Label" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/MasterVolumeControl"]
+layout_mode = 1
+offset_right = 134.0
+offset_bottom = 23.0
+text = "MASTER VOLUME"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/MasterVolumeControl"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+tooltip_text = "Master Volume Setting"
+max_value = 1.5
+step = 0.001
+value = 1.5
+
+[node name="SFXVolumeControl2" type="Control" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="SFXVolumeSliderLabel" type="Label" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/SFXVolumeControl2"]
+layout_mode = 1
+offset_right = 134.0
+offset_bottom = 23.0
+text = "SFX VOLUME"
+
+[node name="SFXVolumeSlider" type="HSlider" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/SFXVolumeControl2"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+tooltip_text = "SFX Volume Setting"
+max_value = 1.5
+step = 0.001
+value = 1.5
+
+[node name="MusicVolumeControl2" type="Control" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="MusicVolumeSliderLabel" type="Label" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/MusicVolumeControl2"]
+layout_mode = 1
+offset_right = 134.0
+offset_bottom = 23.0
+text = "MUSIC VOLUME"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/MusicVolumeControl2"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+tooltip_text = "Music Volume Setting"
+max_value = 1.5
+step = 0.001
+value = 1.5
+
+[node name="BackButton" type="Button" parent="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "BACK"
+
+[connection signal="value_changed" from="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/MasterVolumeControl/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/SFXVolumeControl2/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/MusicVolumeControl2/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="pressed" from="OptionsButtonControl/ScrollContainer/MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

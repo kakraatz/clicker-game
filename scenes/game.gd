@@ -1,4 +1,5 @@
 extends Node
+class_name Game
 
 signal quit_signal
 
@@ -6,7 +7,9 @@ signal quit_signal
 @onready var game_control_node: Control = $"."
 @onready var gold_value_label: Label = $ValueControl/Current_Value_Label
 @onready var menu_scene: PackedScene = preload("res://scenes/menu.tscn")
-@onready var building_manager_node: BuildingManager = $BuildingManger
+@onready var building_manager_node: BuildingManager = $BuildingManager
+@onready var menu_control: Control = $MenuControl
+@onready var menu_button_control: Control = $MenuButtonControl 
 
 var flat_multiplier = 1.32
 var game_state_resource: GameStateTemplate = preload("res://resources/totals/game_state_resource.tres")
@@ -20,6 +23,7 @@ func _ready() -> void:
 	if !game_state_resource:
 		game_state_resource = preload("res://resources/totals/game_state_resource.tres")
 	quit_signal.connect(quitGame)
+	
 	building_manager_node.connect("toggleVisibilitySignal", Callable(building_manager_node ,"toggleVisibilitySignal"))
 	cycle_interval.timeout.connect(run_tick)
 	
@@ -46,21 +50,30 @@ func run_tick():
 	var current_gold = game_state_resource.current_gold
 	game_state_resource.current_gold = current_gold + game_state_resource.current_tick_increment_value
 
-func toggle_building_ui_visability() -> void:
-	if game_control_node:
-		building_manager_node.emit_signal("toggleVisibilitySignal")
+func toggle_menu_button_visability() -> void:
+	if menu_button_control:
+		if menu_button_control.visible:
+			menu_button_control.visible = false
+		else:
+			menu_button_control.visible = true
 	else:
-		print('no node')
+		printerr('no menu control')
 
 func _on_menu_button_pressed() -> void:
 	if game_control_node:
-		toggle_building_ui_visability()
+		#toggle_building_ui_visability()
 		var menu = menu_scene.instantiate()
 		menu.game_started = true
 		menu.connect("quit_signal", quitGame)
-		game_control_node.add_child(menu)
+		menu.connect("resume_signal", resume_game)
+		if menu_control:
+			menu_control.add_child(menu)
+			toggle_menu_button_visability()
 	else:
-		print('no node')
+		printerr('no menu node')
+		
+func resume_game():
+	toggle_menu_button_visability()
 		
 func quitGame():
 	FileManager.save_game_state()

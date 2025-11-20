@@ -55,3 +55,15 @@ Knights Tower
 Wizards Tower
 Arcane Library
 Dragon Roost
+
+
+Options
+Sound
+	Master
+	UI
+	Music
+Resolution
+Windowed/FullScreen
+Delete Save Game
+Cloud Save Yes/No
+Color Blind Mode
